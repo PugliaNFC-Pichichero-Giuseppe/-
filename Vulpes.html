@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulpes Pop Bistrot</title>
+<meta name="description" content="Vulpes Pop Bistrot — Cassano delle Murge">
+<meta name="theme-color" content="#12211A">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===================================================================
+     GA4 — sostituisci G-XXXXXXXXXX con il Measurement ID reale del cliente
+     (lo stesso campo che usi nel generatore self-serve)
+     =================================================================== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<style>
+  :root{
+    color-scheme: dark;
+    --bg: #12211A;
+    --surface: #1A2E23;
+    --line: #2E4738;
+    --copper: #C1602E;
+    --amber: #E8A94A;
+    --cream: #F3E9DC;
+    --muted: #94A896;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ -webkit-tap-highlight-color: transparent; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Archivo', sans-serif;
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  .page{
+    width: 100%;
+    max-width: 440px;
+    padding: 56px 0 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+  }
+
+  /* ---- header / mark ---- */
+
+  .mark{ display:block; margin: 0 auto 28px; }
+
+  .eyebrow{
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .eyebrow span{
+    display: block;
+    margin-top: 4px;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: none;
+  }
+
+  /* ---- hero ---- */
+
+  .hero{ margin: 40px 0 36px; }
+
+  h1{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(44px, 13vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+    color: var(--cream);
+  }
+
+  h1 em{
+    font-style: normal;
+    color: var(--copper);
+  }
+
+  .sub{
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 34ch;
+    margin: 0;
+  }
+
+  /* ---- tap rows ---- */
+
+  nav{
+    border-top: 1px solid var(--line);
+  }
+
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color .15s ease, transform .1s ease;
+  }
+
+  .row:active{
+    background: var(--surface);
+    transform: scale(0.99);
+  }
+
+  .row:focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: -2px;
+  }
+
+  .row-text{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row-text .label{
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--cream);
+  }
+
+  .row-text .desc{
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .arrow{
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--copper);
+  }
+
+  .arrow svg{ width: 100%; height: 100%; }
+
+  .row:hover .arrow{ color: var(--amber); }
+
+  @media (prefers-reduced-motion: reduce){
+    .row{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Marchio volpe: geometria a triangoli sfaccettati, verificata visivamente -->
+  <svg class="mark" width="84" height="84" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="gL" x1="14" y1="23" x2="32" y2="60" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#F0B968"/>
+        <stop offset="1" stop-color="#C1602E"/>
+      </linearGradient>
+      <linearGradient id="gR" x1="50" y1="23" x2="32" y2="60" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#C1602E"/>
+        <stop offset="1" stop-color="#8A3E1B"/>
+      </linearGradient>
+      <linearGradient id="gEarL" x1="9" y1="27" x2="18" y2="4" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#C1602E"/>
+        <stop offset="1" stop-color="#E29A4C"/>
+      </linearGradient>
+      <linearGradient id="gEarR" x1="55" y1="27" x2="46" y2="4" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#8A3E1B"/>
+        <stop offset="1" stop-color="#C1602E"/>
+      </linearGradient>
+    </defs>
+    <g stroke="#F3E9DC" stroke-width="0.6" stroke-linejoin="round">
+      <polygon points="9,27 18,4 26,24" fill="url(#gEarL)"/>
+      <polygon points="55,27 46,4 38,24" fill="url(#gEarR)"/>
+      <polygon points="14,23 32,23 32,60" fill="url(#gL)"/>
+      <polygon points="32,23 50,23 32,60" fill="url(#gR)"/>
+    </g>
+    <polygon points="26,24 32,17 38,24" fill="#12211A"/>
+  </svg>
+
+  <p class="eyebrow">Vulpes Pop Bistrot<span>Cassano delle Murge</span></p>
+
+  <div class="hero">
+    <h1>Ci racconti<br><em>com'è andata?</em></h1>
+    <p class="sub">Ogni parola che ci lasci è un piccolo regalo.</p>
+  </div>
+
+  <nav>
+    <a class="row" id="btn-review" href="https://www.google.com/maps/search/?api=1&query=Vulpes+Pop+Bistrot+Piazza+Aldo+Moro+46+Cassano+delle+Murge" target="_blank" rel="noopener">
+      <span class="row-text">
+        <span class="label">Lasciaci una recensione</span>
+        <span class="desc">Facci brillare agli occhi di tutta Cassano</span>
+      </span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="row" id="btn-instagram" href="https://www.instagram.com/vulpespopbistrot/" target="_blank" rel="noopener">
+      <span class="row-text">
+        <span class="label">Seguici su Instagram</span>
+        <span class="desc">Eventi, novità e il bistrot ogni giorno</span>
+      </span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="row" id="btn-call" href="tel:+390802055139">
+      <span class="row-text">
+        <span class="label">Chiamaci</span>
+        <span class="desc">Per un tavolo o informazioni</span>
+      </span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </nav>
+
+
+</div>
+
+<script>
+  // ---- Tracking coerente con l'infrastruttura GA4 esistente ----
+  var params = new URLSearchParams(window.location.search);
+  var channel = params.get('src') || 'direct';   // nfc | qr | direct
+  var clientName = 'vulpes-pop-bistrot';
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'scan_redirect', {
+      client_name: clientName,
+      channel: channel
+    });
+  }
+
+  // Click sui singoli bottoni — utile per sapere quale azione converte di più
+  document.querySelectorAll('nav a.row').forEach(function(el){
+    el.addEventListener('click', function(){
+      if (typeof gtag === 'function') {
+        gtag('event', 'button_click', {
+          client_name: clientName,
+          channel: channel,
+          button_id: el.id
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
