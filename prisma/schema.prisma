@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime   @default(now())
+  businesses   Business[]
+}
+
+// One owner account can run the review gate for several client businesses
+// (this is meant to be resold agency-style, one login per reseller).
+model Business {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  name            String
+  googleReviewUrl String
+  instagramUrl    String?
+  phone           String?
+  ratingThreshold Int           @default(4)
+  primaryColor    String        @default("#C1602E")
+  accentColor     String        @default("#E8A94A")
+  gaMeasurementId String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  owner           User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId         String
+  reviewEvents    ReviewEvent[]
+  feedbacks       Feedback[]
+
+  @@index([ownerId])
+}
+
+// One row per star rating submitted at the public gate, whether or not it
+// went on to redirect to Google — this is the source of the dashboard stats.
+model ReviewEvent {
+  id         String    @id @default(cuid())
+  rating     Int
+  channel    String    @default("direct") // nfc | qr | direct
+  redirected Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  businessId String
+  feedback   Feedback?
+
+  @@index([businessId, createdAt])
+}
+
+// Private feedback captured when a rating falls below the business's
+// threshold. Never posted publicly — only visible in the owner's dashboard.
+model Feedback {
+  id            String       @id @default(cuid())
+  rating        Int
+  comment       String
+  contactName   String?
+  contactInfo   String?
+  status        String       @default("new") // new | read | resolved
+  createdAt     DateTime     @default(now())
+  business      Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  businessId    String
+  reviewEvent   ReviewEvent? @relation(fields: [reviewEventId], references: [id], onDelete: SetNull)
+  reviewEventId String?      @unique
+
+  @@index([businessId, status])
+}
