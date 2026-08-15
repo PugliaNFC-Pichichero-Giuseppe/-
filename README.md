@@ -26,19 +26,24 @@ privato è pensato come un canale aggiuntivo e più veloce, non come un blocco.
   versione ha diverse convenzioni cambiate rispetto a Next.js "classico" (es. `proxy.ts` al posto
   di `middleware.ts`, generatore Prisma dedicato, Tailwind v4 CSS-first).
 - **Tailwind CSS v4**
-- **Prisma 7** + SQLite (`better-sqlite3` driver adapter) per lo sviluppo/prova locale
+- **Prisma 7** + **Postgres** (`@prisma/adapter-pg`) — locale in sviluppo, ospitato in produzione
+  (pensato per il tier Postgres di Vercel/Neon, vedi sotto)
 - **jose** per le sessioni (JWT firmato in cookie httpOnly), **bcryptjs** per le password
 - **qrcode** per generare il QR code di ogni attività, lato server
 
 ## Setup rapido (prova locale)
 
+Serve un Postgres raggiungibile — locale (`brew install postgresql` / `apt install postgresql`)
+o già lo stesso database ospitato che userai in produzione (va benissimo, vedi sezione Deploy).
+
 ```bash
 npm install
 cp .env.example .env
-# genera un secret e incollalo in .env al posto del placeholder:
+# imposta DATABASE_URL nel .env con la tua stringa di connessione Postgres, poi genera un
+# secret e incollalo al posto del placeholder di SESSION_SECRET:
 openssl rand -base64 32
 
-npx prisma migrate deploy   # crea prisma/dev.db
+npx prisma migrate deploy   # crea le tabelle
 npx prisma db seed          # crea un account demo + dati di esempio
 
 npm run dev                 # http://localhost:3000
@@ -67,21 +72,32 @@ src/app/r/[slug]              Pagina pubblica "gate" mostrata al cliente finale
 Ogni pagina sotto `/dashboard/[slug]/*` verifica che l'attività appartenga all'utente loggato
 (`getOwnedBusiness`) — nessuna route fida solo del middleware.
 
-## Deploy in produzione
+## Deploy su Vercel
 
-**Il database SQLite locale (`dev.db`) è pensato solo per sviluppo e prova.** Su piattaforme
-serverless come Vercel il filesystem è di sola lettura (a parte `/tmp`, effimero), quindi i dati
-non sopravvivrebbero tra una richiesta e l'altra. Prima di andare in produzione, cambia database.
-Due strade, entrambe richiedono solo di toccare `prisma/schema.prisma` + `prisma.config.ts` +
-`src/lib/db.ts` (query e resto del codice restano invariati):
+Il codice è già pronto per Vercel (Postgres invece di un file locale, `prisma migrate deploy`
+integrato nella build). I passaggi che seguono si fanno dal sito, con il tuo account:
 
-1. **Turso / LibSQL** — resta SQLite "as-is", ma ospitato. Percorso di migrazione più corto:
-   `npm install @prisma/adapter-libsql @libsql/client`, cambiare l'adapter in `src/lib/db.ts`.
-2. **Postgres gestito** (Neon, Supabase, Railway…) — `datasource db { provider = "postgresql" }`
-   e adapter `@prisma/adapter-pg`. Scelta più tradizionale per un vero SaaS multi-tenant.
+1. **Importa il repository.** Su [vercel.com](https://vercel.com) → *Add New → Project* → importa
+   `PugliaNFC-Pichichero-Giuseppe/-` da GitHub. Se non hai ancora unito questo branch a `main`,
+   Vercel lo mostra comunque come *Preview Deployment* quando lo selezioni — non serve fare merge
+   solo per vederlo online.
+2. **Aggiungi un database Postgres.** Nella scheda *Storage* del progetto → *Create Database* →
+   Postgres (Neon). Vercel imposta da solo la variabile `DATABASE_URL` — non serve un altro
+   account.
+3. **Aggiungi `SESSION_SECRET`.** In *Settings → Environment Variables*, incolla una stringa
+   generata con `openssl rand -base64 32`.
+4. **Deploy.** Ogni push su questo branch da qui in poi ricompila automaticamente. La prima build
+   applica anche le migrazioni Prisma sul database appena creato (è nello script `build`).
+5. **Popola i dati demo (facoltativo, una tantum).** Dal tuo PC, con la `DATABASE_URL` che Vercel
+   ti mostra in *Storage* copiata in un `.env` locale:
+   ```bash
+   npx prisma db seed
+   ```
+   così l'URL pubblico che ti dà Vercel ha subito dentro l'account demo e i dati di esempio.
 
-Poi: build con `npm run build`, deploy su Vercel (o hosting Node equivalente), variabili
-d'ambiente `DATABASE_URL` e `SESSION_SECRET` impostate sulla piattaforma di hosting.
+Nota sul piano gratuito ("Hobby"): va benissimo per provarla e per un primo cliente di cortesia,
+ma i suoi termini escludono l'uso commerciale — quando inizi a farla pagare a più aziende serve
+il piano Pro (~20$/mese).
 
 ## Comandi utili
 
