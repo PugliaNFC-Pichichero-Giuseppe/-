@@ -225,6 +225,7 @@ export async function runFeedbackAnalysisAction(slug: string): Promise<AnalysisF
       },
     });
   } catch (err) {
+    console.error("runFeedbackAnalysisAction failed:", err);
     if (err instanceof AnalysisUnavailableError) {
       return { error: "Analisi AI non configurata — manca ANTHROPIC_API_KEY nelle variabili d'ambiente." };
     }
@@ -234,10 +235,12 @@ export async function runFeedbackAnalysisAction(slug: string): Promise<AnalysisF
     if (err instanceof Anthropic.RateLimitError) {
       return { error: "Troppe richieste al servizio AI in questo momento — riprova tra poco." };
     }
+    if (err instanceof Anthropic.BadRequestError && /credit balance/i.test(err.message)) {
+      return { error: "Credito Anthropic esaurito — ricaricalo su console.anthropic.com → Plans & Billing." };
+    }
     if (err instanceof Anthropic.APIError) {
       return { error: "Il servizio AI non ha risposto correttamente — riprova." };
     }
-    console.error("runFeedbackAnalysisAction failed:", err);
     return { error: "Errore imprevisto durante l'analisi — riprova." };
   }
 
