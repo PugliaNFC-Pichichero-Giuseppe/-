@@ -7,7 +7,7 @@ import { BusinessNav } from "@/components/BusinessNav";
 import { runFeedbackAnalysisAction } from "../../actions";
 import { AnalysisRunner } from "./AnalysisRunner";
 
-// The Claude API call this page's action makes can take longer than the
+// The Gemini API call this page's action makes can take longer than the
 // platform's default Server Action timeout.
 export const maxDuration = 60;
 
@@ -62,7 +62,7 @@ export default async function FeedbackAnalysisPage({ params }: Props) {
                         month: "short",
                         year: "numeric",
                       })} su ${analysis.feedbackCount} feedback.`
-                    : "Raggruppa i feedback privati nei temi ricorrenti, con l'AI di Claude."}
+                    : "Raggruppa i feedback privati nei temi ricorrenti, con l'AI di Gemini."}
                 </p>
               </div>
               <AnalysisRunner action={runAction} hasAnalysis={!!analysis} />

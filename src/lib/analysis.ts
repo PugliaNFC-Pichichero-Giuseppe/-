@@ -1,10 +1,10 @@
 import "server-only";
-import Anthropic from "@anthropic-ai/sdk";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
+import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 
-const client = process.env.ANTHROPIC_API_KEY ? new Anthropic() : null;
+const client = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
 
+const MODEL = "gemini-2.5-flash";
 export const MIN_FEEDBACK_FOR_ANALYSIS = 3;
 const MAX_FEEDBACK_IN_PROMPT = 150;
 
@@ -36,36 +36,50 @@ const SYSTEM_PROMPT = `You analyze private customer feedback for a local busines
 
 Identify the recurring themes across these comments — group similar complaints or praise together rather than listing each comment separately. For each theme: estimate how many given entries relate to it, judge its severity (low/medium/high) weighing both frequency and how serious the issue is for the business (e.g. hygiene or billing complaints outweigh minor slowness), and pick one short quote that best represents it, copied verbatim from one of the entries.
 
-Write a short overall summary first. All free-text output (summary, theme titles, descriptions, quotes) must be in Italian, matching the source comments. Only report themes actually supported by the given entries — if the feedback is too sparse or varied to find real recurring themes, return fewer themes rather than forcing groupings.`;
+Write a short overall summary first. All free-text output (summary, theme titles, descriptions, quotes) must be in Italian, matching the source comments. Only report themes actually supported by the given entries — if the feedback is too sparse or varied to find real recurring themes, return fewer themes rather than forcing groupings.
+
+Respond with JSON matching the given schema only, no other text.`;
 
 export class AnalysisUnavailableError extends Error {}
+export class AnalysisParseError extends Error {}
 
 export async function analyzeFeedback(
   businessName: string,
   entries: { rating: number; comment: string }[],
 ): Promise<FeedbackAnalysisPayload> {
   if (!client) {
-    throw new AnalysisUnavailableError("ANTHROPIC_API_KEY non configurata");
+    throw new AnalysisUnavailableError("GEMINI_API_KEY non configurata");
   }
 
   const sample = entries.slice(0, MAX_FEEDBACK_IN_PROMPT);
   const list = sample.map((f, i) => `${i + 1}. [${f.rating}★] ${f.comment.trim()}`).join("\n");
 
-  const response = await client.messages.parse({
-    model: "claude-opus-5",
-    max_tokens: 4096,
-    system: SYSTEM_PROMPT,
-    messages: [
-      {
-        role: "user",
-        content: `Feedback privato per "${businessName}" (${sample.length} voci):\n\n${list}`,
-      },
-    ],
-    output_config: { format: zodOutputFormat(feedbackAnalysisSchema) },
+  const response = await client.models.generateContent({
+    model: MODEL,
+    contents: `Feedback privato per "${businessName}" (${sample.length} voci):\n\n${list}`,
+    config: {
+      systemInstruction: SYSTEM_PROMPT,
+      maxOutputTokens: 4096,
+      responseMimeType: "application/json",
+      responseJsonSchema: z.toJSONSchema(feedbackAnalysisSchema),
+    },
   });
 
-  if (!response.parsed_output) {
-    throw new Error("L'analisi non ha prodotto un risultato valido");
+  const text = response.text;
+  if (!text) {
+    throw new AnalysisParseError("L'analisi non ha prodotto un risultato");
   }
-  return response.parsed_output;
+
+  let parsedJson: unknown;
+  try {
+    parsedJson = JSON.parse(text);
+  } catch {
+    throw new AnalysisParseError("L'analisi non ha prodotto un JSON valido");
+  }
+
+  const parsed = feedbackAnalysisSchema.safeParse(parsedJson);
+  if (!parsed.success) {
+    throw new AnalysisParseError("L'analisi non rispetta il formato atteso");
+  }
+  return parsed.data;
 }

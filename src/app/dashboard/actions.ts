@@ -3,14 +3,14 @@
 import { cookies } from "next/headers";
 import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
-import Anthropic from "@anthropic-ai/sdk";
+import { ApiError as GeminiApiError } from "@google/genai";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { getAccessibleBusiness } from "@/lib/business";
 import { SESSION_COOKIE } from "@/lib/session";
 import { uniqueSlug } from "@/lib/slug";
 import { businessSchema, feedbackStatusSchema } from "@/lib/validation";
-import { analyzeFeedback, AnalysisUnavailableError, MIN_FEEDBACK_FOR_ANALYSIS } from "@/lib/analysis";
+import { analyzeFeedback, AnalysisUnavailableError, AnalysisParseError, MIN_FEEDBACK_FOR_ANALYSIS } from "@/lib/analysis";
 
 export async function logoutAction() {
   (await cookies()).delete(SESSION_COOKIE);
@@ -227,18 +227,18 @@ export async function runFeedbackAnalysisAction(slug: string): Promise<AnalysisF
   } catch (err) {
     console.error("runFeedbackAnalysisAction failed:", err);
     if (err instanceof AnalysisUnavailableError) {
-      return { error: "Analisi AI non configurata — manca ANTHROPIC_API_KEY nelle variabili d'ambiente." };
+      return { error: "Analisi AI non configurata — manca GEMINI_API_KEY nelle variabili d'ambiente." };
     }
-    if (err instanceof Anthropic.AuthenticationError) {
-      return { error: "Chiave API Anthropic non valida — controlla ANTHROPIC_API_KEY." };
+    if (err instanceof AnalysisParseError) {
+      return { error: "Il servizio AI non ha risposto correttamente — riprova." };
     }
-    if (err instanceof Anthropic.RateLimitError) {
-      return { error: "Troppe richieste al servizio AI in questo momento — riprova tra poco." };
-    }
-    if (err instanceof Anthropic.BadRequestError && /credit balance/i.test(err.message)) {
-      return { error: "Credito Anthropic esaurito — ricaricalo su console.anthropic.com → Plans & Billing." };
-    }
-    if (err instanceof Anthropic.APIError) {
+    if (err instanceof GeminiApiError) {
+      if (err.status === 401 || err.status === 403) {
+        return { error: "Chiave API Gemini non valida — controlla GEMINI_API_KEY." };
+      }
+      if (err.status === 429) {
+        return { error: "Limite di richieste AI gratuite raggiunto per ora — riprova tra poco." };
+      }
       return { error: "Il servizio AI non ha risposto correttamente — riprova." };
     }
     return { error: "Errore imprevisto durante l'analisi — riprova." };

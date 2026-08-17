@@ -92,7 +92,7 @@ model Feedback {
 
 // Cached AI-generated summary of a business's private feedback. Regenerated
 // on demand from the dashboard (see runFeedbackAnalysisAction) rather than on
-// every page load, so Claude API calls stay opt-in and bounded in number —
+// every page load, so Gemini API calls stay opt-in and bounded in number —
 // one row per business, overwritten on each regeneration.
 model FeedbackAnalysis {
   id            String   @id @default(cuid())
