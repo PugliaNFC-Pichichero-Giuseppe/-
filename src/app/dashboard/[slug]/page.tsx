@@ -39,15 +39,9 @@ export default async function BusinessOverviewPage({ params }: Props) {
         <div className="rounded-2xl border border-dashed border-line p-10 text-center">
           <p className="text-lg font-semibold text-cream">Ancora nessuna valutazione</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-            Condividi la pagina pubblica tramite card NFC, QR code o link diretto — trovi tutto in
-            Impostazioni. Le statistiche appariranno qui appena arriva la prima valutazione.
+            Condividi la pagina pubblica con i tuoi clienti tramite card NFC, QR code o link diretto.
+            Le statistiche appariranno qui appena arriva la prima valutazione.
           </p>
-          <Link
-            href={`/dashboard/${business.slug}/settings`}
-            className="mt-6 inline-block rounded-lg bg-copper px-5 py-2.5 text-sm font-semibold text-cream hover:bg-copper/90"
-          >
-            Vai a Impostazioni
-          </Link>
         </div>
       ) : (
         <>

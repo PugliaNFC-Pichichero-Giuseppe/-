@@ -29,7 +29,6 @@ privato è pensato come un canale aggiuntivo e più veloce, non come un blocco.
 - **Prisma 7** + **Postgres** (`@prisma/adapter-pg`) — locale in sviluppo, ospitato in produzione
   (pensato per il tier Postgres di Vercel/Neon, vedi sotto)
 - **jose** per le sessioni (JWT firmato in cookie httpOnly), **bcryptjs** per le password
-- **qrcode** per generare il QR code di ogni attività, lato server
 
 ## Setup rapido (prova locale)
 
