@@ -1,16 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #12211a;
-  --surface: #1a2e23;
-  --surface-2: #21392a;
-  --line: #2e4738;
-  --copper: #c1602e;
+  color-scheme: light;
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface-2: #f2eee7;
+  --line: #e4dfd6;
+  /* Deepened from the brand's brighter copper (#C1602E) so it clears AA
+     contrast on a light surface in every role it's used: large headings,
+     small links, and as a button fill under white text (5.2-5.6:1 here vs
+     ~4:1 at the brighter shade). */
+  --copper: #a84e22;
+  /* Stays bright — reserved for fills (star ratings, badges, the ordinal
+     ramp) where it never sits behind small text; see RatingBars.tsx. */
   --amber: #e8a94a;
-  --cream: #f3e9dc;
-  --muted: #94a896;
-  --danger: #e07358;
-  --success: #6fae7f;
+  --cream: #211c16;
+  --muted: #655e50;
+  --danger: #c4482c;
+  --success: #2f7645;
 }
 
 @theme inline {

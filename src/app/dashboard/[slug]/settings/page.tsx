@@ -30,7 +30,7 @@ export default async function BusinessSettingsPage({ params }: Props) {
   const qrDataUrl = await QRCode.toDataURL(qrTargetUrl, {
     width: 480,
     margin: 1,
-    color: { dark: "#12211A", light: "#F3E9DC" },
+    color: { dark: "#211C16", light: "#FFFFFF" },
   });
 
   const updateAction = updateBusinessAction.bind(null, business.slug);

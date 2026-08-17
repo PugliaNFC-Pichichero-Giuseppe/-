@@ -72,7 +72,7 @@ export default async function BusinessOverviewPage({ params }: Props) {
           <div className="mt-6 rounded-2xl border border-line bg-surface p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-semibold text-cream">Ultimo feedback privato</h2>
-              <Link href={`/dashboard/${business.slug}/feedback`} className="text-sm text-amber hover:underline">
+              <Link href={`/dashboard/${business.slug}/feedback`} className="text-sm text-copper hover:underline">
                 Vedi tutto →
               </Link>
             </div>

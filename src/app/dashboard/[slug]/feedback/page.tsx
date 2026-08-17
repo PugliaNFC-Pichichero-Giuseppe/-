@@ -9,7 +9,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 const STATUS_LABEL: Record<string, string> = { new: "Nuovo", read: "Letto", resolved: "Risolto" };
 const STATUS_CLASS: Record<string, string> = {
-  new: "bg-amber/15 text-amber",
+  new: "bg-amber/15 text-copper",
   read: "bg-line text-muted",
   resolved: "bg-success/15 text-success",
 };

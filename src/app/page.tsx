@@ -39,7 +39,7 @@ export default function LandingPage() {
       </header>
 
       <section className="flex flex-1 flex-col items-start justify-center py-16">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-amber">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-copper">
           Per attività locali — bar, ristoranti, negozi, studi
         </p>
         <h1 className="max-w-2xl font-display text-5xl font-black uppercase leading-[0.98] text-cream sm:text-6xl">

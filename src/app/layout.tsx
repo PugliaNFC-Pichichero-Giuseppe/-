@@ -1,10 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Recensioni Smart — instrada solo le recensioni migliori",
   description:
     "Raccogli la valutazione del cliente, manda su Google solo chi ti dà 4-5 stelle e ricevi il resto come feedback privato.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#faf8f5",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

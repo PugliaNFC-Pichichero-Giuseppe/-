@@ -1,8 +1,9 @@
 // Validated ordinal ramp (single hue, monotone OKLCH lightness), one step per
 // star rating — checked with scripts/validate_palette.js --ordinal against
-// this app's dark surface (#1A2E23): all four checks pass, worst adjacent
-// ΔL 0.065, light end (1 star) 2.28:1 contrast.
-const RATING_RAMP = ["#9d4616", "#b05c1e", "#c17429", "#d28c36", "#e1a447"];
+// this app's light surface (#FFFFFF): all four checks pass, worst adjacent
+// ΔL 0.08, light end (1 star) 2.08:1 contrast. Light mode reads light→dark
+// low→high (dark mode's anchor was flipped the other way).
+const RATING_RAMP = ["#f2a07c", "#d48a5b", "#b6753b", "#986017", "#7b4d00"];
 
 export function RatingBars({ counts }: { counts: number[] }) {
   const max = Math.max(1, ...counts);

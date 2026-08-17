@@ -57,7 +57,7 @@ export default function SignupPage() {
 
         <p className="mt-6 text-center text-sm text-muted">
           Hai già un account?{" "}
-          <Link href="/login" className="font-semibold text-amber hover:underline">
+          <Link href="/login" className="font-semibold text-copper hover:underline">
             Accedi
           </Link>
         </p>
