@@ -31,9 +31,14 @@ export default function LoginPage() {
               <input className={inputClass} id="email" name="email" type="email" autoComplete="email" required />
             </div>
             <div>
-              <label className={labelClass} htmlFor="password">
-                Password
-              </label>
+              <div className="flex items-center justify-between">
+                <label className={labelClass} htmlFor="password">
+                  Password
+                </label>
+                <Link href="/forgot-password" className="mb-2 text-xs text-muted hover:text-copper">
+                  Password dimenticata?
+                </Link>
+              </div>
               <input
                 className={inputClass}
                 id="password"

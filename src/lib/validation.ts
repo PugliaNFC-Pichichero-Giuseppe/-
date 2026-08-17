@@ -11,6 +11,15 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password richiesta"),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.email("Email non valida").trim().toLowerCase(),
+});
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1),
+  password: z.string().min(8, "Almeno 8 caratteri"),
+});
+
 const optionalUrl = z.union([z.literal(""), z.url("URL non valido")]).optional();
 const hexColor = z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Colore non valido");
 

@@ -15,6 +15,7 @@ model User {
   createdAt    DateTime         @default(now())
   businesses   Business[]
   memberships  BusinessMember[]
+  resetTokens  PasswordResetToken[]
 }
 
 // One owner account can run the review gate for several client businesses
@@ -104,4 +105,18 @@ model FeedbackAnalysis {
   themes        Json
   feedbackCount Int
   generatedAt   DateTime @default(now())
+}
+
+// Only the SHA-256 hash of the token is stored — same reasoning as password
+// hashing, so a DB leak alone can't be used to reset anyone's account.
+// One-time use: deleted on successful reset (see resetPasswordAction).
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
