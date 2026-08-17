@@ -86,9 +86,13 @@ integrato nella build). I passaggi che seguono si fanno dal sito, con il tuo acc
    account.
 3. **Aggiungi `SESSION_SECRET`.** In *Settings → Environment Variables*, incolla una stringa
    generata con `openssl rand -base64 32`.
-4. **Deploy.** Ogni push su questo branch da qui in poi ricompila automaticamente. La prima build
+4. **Aggiungi `RESEND_API_KEY` e `NOTIFICATION_FROM_EMAIL`** (facoltative — senza, l'app funziona
+   lo stesso, semplicemente non manda l'email di avviso sui feedback negativi). Chiave da
+   [resend.com/api-keys](https://resend.com/api-keys); `NOTIFICATION_FROM_EMAIL` può restare
+   `Recensioni Smart <onboarding@resend.dev>` finché non colleghi un dominio tuo su Resend.
+5. **Deploy.** Ogni push su questo branch da qui in poi ricompila automaticamente. La prima build
    applica anche le migrazioni Prisma sul database appena creato (è nello script `build`).
-5. **Popola i dati demo (facoltativo, una tantum).** Dal tuo PC, con la `DATABASE_URL` che Vercel
+6. **Popola i dati demo (facoltativo, una tantum).** Dal tuo PC, con la `DATABASE_URL` che Vercel
    ti mostra in *Storage* copiata in un `.env` locale:
    ```bash
    npx prisma db seed

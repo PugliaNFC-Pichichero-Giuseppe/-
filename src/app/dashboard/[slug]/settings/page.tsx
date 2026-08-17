@@ -1,20 +1,13 @@
 import { notFound, redirect } from "next/navigation";
-import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getCurrentUser } from "@/lib/auth";
 import { getAccessibleBusiness } from "@/lib/business";
+import { getBaseUrl } from "@/lib/url";
 import { BusinessNav } from "@/components/BusinessNav";
 import { BusinessForm } from "@/components/BusinessForm";
 import { updateBusinessAction } from "../../actions";
 
 type Props = { params: Promise<{ slug: string }> };
-
-async function getBaseUrl() {
-  const h = await headers();
-  const host = h.get("host") ?? "localhost:3000";
-  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  return `${proto}://${host}`;
-}
 
 export default async function BusinessSettingsPage({ params }: Props) {
   const { slug } = await params;

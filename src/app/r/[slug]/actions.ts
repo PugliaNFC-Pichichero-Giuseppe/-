@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/db";
 import { feedbackSchema, reviewEventSchema } from "@/lib/validation";
+import { sendFeedbackAlert } from "@/lib/email";
+import { getBaseUrl } from "@/lib/url";
 
 export type SubmitRatingResult =
   | { ok: true; reviewEventId: string; redirected: true; googleReviewUrl: string }
@@ -55,7 +57,17 @@ export async function submitFeedbackAction(input: {
 
   const reviewEvent = await prisma.reviewEvent.findUnique({
     where: { id: parsed.data.reviewEventId },
-    include: { feedback: true },
+    include: {
+      feedback: true,
+      business: {
+        select: {
+          name: true,
+          slug: true,
+          owner: { select: { email: true } },
+          members: { select: { user: { select: { email: true } } } },
+        },
+      },
+    },
   });
   if (!reviewEvent) {
     return { ok: false, error: "Sessione scaduta, ricarica la pagina" };
@@ -73,6 +85,18 @@ export async function submitFeedbackAction(input: {
       contactName: parsed.data.contactName || null,
       contactInfo: parsed.data.contactInfo || null,
     },
+  });
+
+  const baseUrl = await getBaseUrl();
+  const recipients = [reviewEvent.business.owner.email, ...reviewEvent.business.members.map((m) => m.user.email)];
+  await sendFeedbackAlert({
+    to: recipients,
+    businessName: reviewEvent.business.name,
+    feedbackUrl: `${baseUrl}/dashboard/${reviewEvent.business.slug}/feedback`,
+    rating: reviewEvent.rating,
+    comment: parsed.data.comment,
+    contactName: parsed.data.contactName || null,
+    contactInfo: parsed.data.contactInfo || null,
   });
 
   return { ok: true };
