@@ -92,9 +92,12 @@ integrato nella build). I passaggi che seguono si fanno dal sito, con il tuo acc
 5. **Aggiungi `GEMINI_API_KEY`** (facoltativa — senza, la scheda "Analisi" del cruscotto resta
    disponibile ma segnala che non è configurata). Chiave gratuita da
    [aistudio.google.com](https://aistudio.google.com/apikey) (nessuna carta di credito richiesta).
-6. **Deploy.** Ogni push su questo branch da qui in poi ricompila automaticamente. La prima build
+6. **Aggiungi `ADMIN_EMAILS`** con la tua email (quella con cui accedi all'app) per sbloccare
+   `/dashboard/admin` — l'unico posto da cui sospendere/riattivare l'accesso di un'attività cliente.
+   Più email separate da virgola se in futuro sarete più admin.
+7. **Deploy.** Ogni push su questo branch da qui in poi ricompila automaticamente. La prima build
    applica anche le migrazioni Prisma sul database appena creato (è nello script `build`).
-7. **Popola i dati demo (facoltativo, una tantum).** Dal tuo PC, con la `DATABASE_URL` che Vercel
+8. **Popola i dati demo (facoltativo, una tantum).** Dal tuo PC, con la `DATABASE_URL` che Vercel
    ti mostra in *Storage* copiata in un `.env` locale:
    ```bash
    npx prisma db seed

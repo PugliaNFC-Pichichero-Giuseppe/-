@@ -30,10 +30,18 @@ export default async function ReviewGatePage({ params, searchParams }: Props) {
       primaryColor: true,
       accentColor: true,
       gaMeasurementId: true,
+      status: true,
     },
   });
 
   if (!business) notFound();
+  if (business.status === "suspended") {
+    return (
+      <div className="flex min-h-svh items-center justify-center px-5 text-center">
+        <p className="text-sm text-muted">Questa pagina non è al momento disponibile.</p>
+      </div>
+    );
+  }
 
   return <GateWidget business={business} channel={resolveChannel(sp.src)} />;
 }

@@ -27,6 +27,7 @@ model Business {
   instagramUrl    String?
   facebookUrl     String?
   phone           String?
+  status          String           @default("active") // active | suspended
   ratingThreshold Int              @default(4)
   primaryColor    String           @default("#C1602E")
   accentColor     String           @default("#E8A94A")
