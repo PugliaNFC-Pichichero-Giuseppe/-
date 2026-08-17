@@ -8,7 +8,7 @@ export default async function DashboardHome() {
   if (!user) redirect("/login");
 
   const businesses = await prisma.business.findMany({
-    where: { ownerId: user.id },
+    where: { OR: [{ ownerId: user.id }, { members: { some: { userId: user.id } } }] },
     orderBy: { createdAt: "desc" },
     include: { _count: { select: { reviewEvents: true, feedbacks: true } } },
   });
@@ -36,7 +36,12 @@ export default async function DashboardHome() {
             href={`/dashboard/${business.slug}`}
             className="rounded-2xl border border-line bg-surface p-6 transition hover:border-copper"
           >
-            <p className="text-lg font-semibold text-cream">{business.name}</p>
+            <div className="flex items-center justify-between">
+              <p className="text-lg font-semibold text-cream">{business.name}</p>
+              {business.ownerId !== user.id && (
+                <span className="rounded-full bg-line px-2.5 py-1 text-xs font-semibold text-muted">Membro</span>
+              )}
+            </div>
             <p className="mt-1 text-sm text-muted">/r/{business.slug}</p>
             <div className="mt-4 flex gap-6 text-sm text-muted">
               <span>

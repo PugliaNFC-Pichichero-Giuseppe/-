@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
-import { getOwnedBusiness } from "@/lib/business";
+import { getAccessibleBusiness } from "@/lib/business";
 import { prisma } from "@/lib/db";
 import { BusinessNav } from "@/components/BusinessNav";
 import { updateFeedbackStatusAction } from "../../actions";
@@ -19,7 +19,7 @@ export default async function FeedbackInboxPage({ params }: Props) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const business = await getOwnedBusiness(slug, user.id);
+  const business = await getAccessibleBusiness(slug, user.id);
   if (!business) notFound();
 
   const feedbacks = await prisma.feedback.findMany({
@@ -29,7 +29,7 @@ export default async function FeedbackInboxPage({ params }: Props) {
 
   return (
     <div>
-      <BusinessNav slug={business.slug} name={business.name} active="feedback" />
+      <BusinessNav slug={business.slug} name={business.name} active="feedback" isOwner={business.isOwner} />
 
       {feedbacks.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-line p-10 text-center text-sm text-muted">

@@ -8,35 +8,52 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(cuid())
-  email        String     @unique
+  id           String           @id @default(cuid())
+  email        String           @unique
   passwordHash String
   name         String
-  createdAt    DateTime   @default(now())
+  createdAt    DateTime         @default(now())
   businesses   Business[]
+  memberships  BusinessMember[]
 }
 
 // One owner account can run the review gate for several client businesses
 // (this is meant to be resold agency-style, one login per reseller).
 model Business {
-  id              String        @id @default(cuid())
-  slug            String        @unique
+  id              String           @id @default(cuid())
+  slug            String           @unique
   name            String
   googleReviewUrl String
   instagramUrl    String?
   phone           String?
-  ratingThreshold Int           @default(4)
-  primaryColor    String        @default("#C1602E")
-  accentColor     String        @default("#E8A94A")
+  ratingThreshold Int              @default(4)
+  primaryColor    String           @default("#C1602E")
+  accentColor     String           @default("#E8A94A")
   gaMeasurementId String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  owner           User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  owner           User             @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId         String
   reviewEvents    ReviewEvent[]
   feedbacks       Feedback[]
+  members         BusinessMember[]
 
   @@index([ownerId])
+}
+
+// A teammate the owner has given dashboard access to. The owner themselves
+// is never a row here — ownership and membership are checked separately
+// (see getAccessibleBusiness) — only the owner can add/remove rows.
+model BusinessMember {
+  id         String   @id @default(cuid())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  businessId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  createdAt  DateTime @default(now())
+
+  @@unique([businessId, userId])
+  @@index([userId])
 }
 
 // One row per star rating submitted at the public gate, whether or not it

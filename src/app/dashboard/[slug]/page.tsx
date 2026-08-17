@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
-import { getOwnedBusiness } from "@/lib/business";
+import { getAccessibleBusiness } from "@/lib/business";
 import { prisma } from "@/lib/db";
 import { BusinessNav } from "@/components/BusinessNav";
 import { StatTile } from "@/components/StatTile";
@@ -15,7 +15,7 @@ export default async function BusinessOverviewPage({ params }: Props) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const business = await getOwnedBusiness(slug, user.id);
+  const business = await getAccessibleBusiness(slug, user.id);
   if (!business) notFound();
 
   const [totalEvents, avgAgg, redirectedCount, newFeedbackCount, distribution, recentFeedback] = await Promise.all([
@@ -33,7 +33,7 @@ export default async function BusinessOverviewPage({ params }: Props) {
 
   return (
     <div>
-      <BusinessNav slug={business.slug} name={business.name} active="overview" />
+      <BusinessNav slug={business.slug} name={business.name} active="overview" isOwner={business.isOwner} />
 
       {totalEvents === 0 ? (
         <div className="rounded-2xl border border-dashed border-line p-10 text-center">

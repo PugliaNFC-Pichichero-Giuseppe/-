@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getCurrentUser } from "@/lib/auth";
-import { getOwnedBusiness } from "@/lib/business";
+import { getAccessibleBusiness } from "@/lib/business";
 import { BusinessNav } from "@/components/BusinessNav";
 import { BusinessForm } from "@/components/BusinessForm";
 import { updateBusinessAction } from "../../actions";
@@ -21,8 +21,8 @@ export default async function BusinessSettingsPage({ params }: Props) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const business = await getOwnedBusiness(slug, user.id);
-  if (!business) notFound();
+  const business = await getAccessibleBusiness(slug, user.id);
+  if (!business || !business.isOwner) notFound();
 
   const baseUrl = await getBaseUrl();
   const publicUrl = `${baseUrl}/r/${business.slug}`;
@@ -37,7 +37,7 @@ export default async function BusinessSettingsPage({ params }: Props) {
 
   return (
     <div>
-      <BusinessNav slug={business.slug} name={business.name} active="settings" />
+      <BusinessNav slug={business.slug} name={business.name} active="settings" isOwner={business.isOwner} />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <div className="rounded-2xl border border-line bg-surface p-8">

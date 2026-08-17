@@ -1,19 +1,22 @@
 import Link from "next/link";
 
 const TABS = [
-  { key: "overview", label: "Panoramica", suffix: "" },
-  { key: "feedback", label: "Feedback", suffix: "/feedback" },
-  { key: "settings", label: "Impostazioni", suffix: "/settings" },
+  { key: "overview", label: "Panoramica", suffix: "", ownerOnly: false },
+  { key: "feedback", label: "Feedback", suffix: "/feedback", ownerOnly: false },
+  { key: "team", label: "Team", suffix: "/team", ownerOnly: true },
+  { key: "settings", label: "Impostazioni", suffix: "/settings", ownerOnly: true },
 ] as const;
 
 export function BusinessNav({
   slug,
   name,
   active,
+  isOwner,
 }: {
   slug: string;
   name: string;
   active: (typeof TABS)[number]["key"];
+  isOwner: boolean;
 }) {
   return (
     <div className="mb-8">
@@ -34,7 +37,7 @@ export function BusinessNav({
         </a>
       </div>
       <nav className="mt-6 flex gap-6 border-b border-line text-sm">
-        {TABS.map((tab) => (
+        {TABS.filter((tab) => isOwner || !tab.ownerOnly).map((tab) => (
           <Link
             key={tab.key}
             href={`/dashboard/${slug}${tab.suffix}`}
