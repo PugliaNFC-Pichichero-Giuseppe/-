@@ -3,6 +3,7 @@ import Link from "next/link";
 const TABS = [
   { key: "overview", label: "Panoramica", suffix: "", ownerOnly: false },
   { key: "feedback", label: "Feedback", suffix: "/feedback", ownerOnly: false },
+  { key: "analysis", label: "Analisi", suffix: "/analysis", ownerOnly: false },
   { key: "team", label: "Team", suffix: "/team", ownerOnly: true },
   { key: "settings", label: "Impostazioni", suffix: "/settings", ownerOnly: true },
 ] as const;
