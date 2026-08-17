@@ -7,6 +7,8 @@ import { prisma } from "@/lib/db";
 import { BusinessNav } from "@/components/BusinessNav";
 import { StatTile } from "@/components/StatTile";
 import { RatingBars } from "@/components/RatingBars";
+import { RatingTrendChart } from "@/components/RatingTrendChart";
+import { bucketRatingsByWeek } from "@/lib/trend";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,18 +20,21 @@ export default async function BusinessOverviewPage({ params }: Props) {
   const business = await getAccessibleBusiness(slug, user.id);
   if (!business) notFound();
 
-  const [totalEvents, avgAgg, redirectedCount, newFeedbackCount, distribution, recentFeedback] = await Promise.all([
-    prisma.reviewEvent.count({ where: { businessId: business.id } }),
-    prisma.reviewEvent.aggregate({ where: { businessId: business.id }, _avg: { rating: true } }),
-    prisma.reviewEvent.count({ where: { businessId: business.id, redirected: true } }),
-    prisma.feedback.count({ where: { businessId: business.id, status: "new" } }),
-    prisma.reviewEvent.groupBy({ by: ["rating"], where: { businessId: business.id }, _count: { rating: true } }),
-    prisma.feedback.findMany({ where: { businessId: business.id }, orderBy: { createdAt: "desc" }, take: 3 }),
-  ]);
+  const [totalEvents, avgAgg, redirectedCount, newFeedbackCount, distribution, recentFeedback, allEvents] =
+    await Promise.all([
+      prisma.reviewEvent.count({ where: { businessId: business.id } }),
+      prisma.reviewEvent.aggregate({ where: { businessId: business.id }, _avg: { rating: true } }),
+      prisma.reviewEvent.count({ where: { businessId: business.id, redirected: true } }),
+      prisma.feedback.count({ where: { businessId: business.id, status: "new" } }),
+      prisma.reviewEvent.groupBy({ by: ["rating"], where: { businessId: business.id }, _count: { rating: true } }),
+      prisma.feedback.findMany({ where: { businessId: business.id }, orderBy: { createdAt: "desc" }, take: 3 }),
+      prisma.reviewEvent.findMany({ where: { businessId: business.id }, select: { rating: true, createdAt: true } }),
+    ]);
 
   const counts = [1, 2, 3, 4, 5].map((r) => distribution.find((d) => d.rating === r)?._count.rating ?? 0);
   const conversionPct = totalEvents > 0 ? Math.round((redirectedCount / totalEvents) * 100) : 0;
   const avgRating = avgAgg._avg.rating;
+  const trendPoints = bucketRatingsByWeek(allEvents).map((p) => ({ ...p, weekStart: p.weekStart.toISOString() }));
 
   return (
     <div>
@@ -54,6 +59,19 @@ export default async function BusinessOverviewPage({ params }: Props) {
               value={String(newFeedbackCount)}
               emphasis={newFeedbackCount > 0}
             />
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-line bg-surface p-6">
+            <h2 className="text-sm font-semibold text-cream">Andamento voto medio</h2>
+            {trendPoints.length >= 2 ? (
+              <div className="mt-6">
+                <RatingTrendChart points={trendPoints} />
+              </div>
+            ) : (
+              <p className="mt-4 text-sm text-muted">
+                Servono almeno due settimane con valutazioni per mostrare un andamento.
+              </p>
+            )}
           </div>
 
           <div className="mt-6 rounded-2xl border border-line bg-surface p-6">
