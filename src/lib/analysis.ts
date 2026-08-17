@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const client = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
 
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-3.6-flash";
 export const MIN_FEEDBACK_FOR_ANALYSIS = 3;
 const MAX_FEEDBACK_IN_PROMPT = 150;
 
