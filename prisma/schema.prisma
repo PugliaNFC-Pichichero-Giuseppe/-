@@ -25,6 +25,7 @@ model Business {
   name            String
   googleReviewUrl String
   instagramUrl    String?
+  facebookUrl     String?
   phone           String?
   ratingThreshold Int              @default(4)
   primaryColor    String           @default("#C1602E")

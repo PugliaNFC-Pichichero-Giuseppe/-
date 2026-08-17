@@ -18,6 +18,7 @@ export const businessSchema = z.object({
   name: z.string().trim().min(2, "Nome troppo corto").max(80),
   googleReviewUrl: z.url("Incolla il link \"Scrivi una recensione\" di Google"),
   instagramUrl: optionalUrl,
+  facebookUrl: optionalUrl,
   phone: z.string().trim().max(30).optional().or(z.literal("")),
   ratingThreshold: z.coerce.number().int().min(1).max(5),
   primaryColor: hexColor,

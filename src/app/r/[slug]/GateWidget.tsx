@@ -11,6 +11,7 @@ type Business = {
   name: string;
   googleReviewUrl: string;
   instagramUrl: string | null;
+  facebookUrl: string | null;
   phone: string | null;
   ratingThreshold: number;
   primaryColor: string;
@@ -257,7 +258,7 @@ export function GateWidget({ business, channel }: { business: Business; channel:
           </div>
         )}
 
-        {(business.instagramUrl || business.phone) && phase === "rate" && (
+        {(business.instagramUrl || business.facebookUrl || business.phone) && phase === "rate" && (
           <nav className="mt-16 border-t border-line">
             {business.instagramUrl && (
               <a
@@ -267,6 +268,17 @@ export function GateWidget({ business, channel }: { business: Business; channel:
                 rel="noopener"
               >
                 <span className="text-sm font-semibold">Seguici su Instagram</span>
+                <span aria-hidden>→</span>
+              </a>
+            )}
+            {business.facebookUrl && (
+              <a
+                className="flex items-center justify-between border-b border-line py-5 text-cream"
+                href={business.facebookUrl}
+                target="_blank"
+                rel="noopener"
+              >
+                <span className="text-sm font-semibold">Seguici su Facebook</span>
                 <span aria-hidden>→</span>
               </a>
             )}

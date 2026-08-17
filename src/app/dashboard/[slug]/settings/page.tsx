@@ -30,6 +30,7 @@ export default async function BusinessSettingsPage({ params }: Props) {
             name: business.name,
             googleReviewUrl: business.googleReviewUrl,
             instagramUrl: business.instagramUrl ?? undefined,
+            facebookUrl: business.facebookUrl ?? undefined,
             phone: business.phone ?? undefined,
             ratingThreshold: business.ratingThreshold,
             primaryColor: business.primaryColor,

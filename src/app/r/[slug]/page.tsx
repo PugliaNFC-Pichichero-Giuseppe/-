@@ -24,6 +24,7 @@ export default async function ReviewGatePage({ params, searchParams }: Props) {
       name: true,
       googleReviewUrl: true,
       instagramUrl: true,
+      facebookUrl: true,
       phone: true,
       ratingThreshold: true,
       primaryColor: true,

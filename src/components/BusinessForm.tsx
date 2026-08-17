@@ -8,6 +8,7 @@ type Defaults = {
   name?: string;
   googleReviewUrl?: string;
   instagramUrl?: string;
+  facebookUrl?: string;
   phone?: string;
   ratingThreshold?: number;
   primaryColor?: string;
@@ -127,6 +128,22 @@ export function BusinessForm({
           />
         </div>
         <div>
+          <label className={labelClass} htmlFor="facebookUrl">
+            Facebook (opzionale)
+          </label>
+          <input
+            id="facebookUrl"
+            name="facebookUrl"
+            type="url"
+            className={inputClass}
+            defaultValue={defaults?.facebookUrl}
+            placeholder="https://facebook.com/..."
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
           <label className={labelClass} htmlFor="phone">
             Telefono (opzionale)
           </label>
@@ -139,19 +156,18 @@ export function BusinessForm({
             placeholder="+39 080 ..."
           />
         </div>
-      </div>
-
-      <div>
-        <label className={labelClass} htmlFor="gaMeasurementId">
-          Google Analytics (opzionale)
-        </label>
-        <input
-          id="gaMeasurementId"
-          name="gaMeasurementId"
-          className={inputClass}
-          defaultValue={defaults?.gaMeasurementId}
-          placeholder="G-XXXXXXXXXX"
-        />
+        <div>
+          <label className={labelClass} htmlFor="gaMeasurementId">
+            Google Analytics (opzionale)
+          </label>
+          <input
+            id="gaMeasurementId"
+            name="gaMeasurementId"
+            className={inputClass}
+            defaultValue={defaults?.gaMeasurementId}
+            placeholder="G-XXXXXXXXXX"
+          />
+        </div>
       </div>
 
       <SubmitButton pendingChildren="Salvataggio…">{submitLabel}</SubmitButton>
