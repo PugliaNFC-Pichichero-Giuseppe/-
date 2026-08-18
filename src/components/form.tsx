@@ -3,7 +3,7 @@
 import { useFormStatus } from "react-dom";
 
 export const inputClass =
-  "w-full rounded-lg border border-line bg-surface px-4 py-3 text-cream placeholder:text-muted focus:border-copper focus:outline-none focus:ring-1 focus:ring-copper";
+  "w-full rounded-lg border border-line bg-surface px-4 py-3 text-cream placeholder:text-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
 
 export const labelClass = "mb-2 block text-sm font-semibold text-cream";
 
@@ -23,7 +23,7 @@ export function SubmitButton({
       disabled={pending}
       className={
         className ??
-        "w-full rounded-lg bg-copper px-4 py-3 font-semibold text-cream transition hover:bg-copper/90 disabled:cursor-not-allowed disabled:opacity-60"
+        "w-full rounded-lg bg-accent px-4 py-3 font-semibold text-cream transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60"
       }
     >
       {pending ? (pendingChildren ?? "Un attimo…") : children}

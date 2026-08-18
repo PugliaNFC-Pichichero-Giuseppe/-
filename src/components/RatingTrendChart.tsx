@@ -75,8 +75,8 @@ export function RatingTrendChart({ points }: { points: TrendPoint[] }) {
             </g>
           ))}
 
-          <path d={areaPath} fill="var(--copper)" fillOpacity={0.1} stroke="none" />
-          <path d={linePath} fill="none" stroke="var(--copper)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={areaPath} fill="var(--accent)" fillOpacity={0.1} stroke="none" />
+          <path d={linePath} fill="none" stroke="var(--accent)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
 
           {hoverIndex !== null && (
             <line
@@ -93,7 +93,7 @@ export function RatingTrendChart({ points }: { points: TrendPoint[] }) {
             cx={xFor(points.length - 1, points.length)}
             cy={yFor(last.avgRating)}
             r={4}
-            fill="var(--copper)"
+            fill="var(--accent)"
             stroke="var(--surface)"
             strokeWidth={2}
           />
@@ -113,7 +113,7 @@ export function RatingTrendChart({ points }: { points: TrendPoint[] }) {
               cx={xFor(hoverIndex, points.length)}
               cy={yFor(hovered.avgRating)}
               r={5}
-              fill="var(--copper)"
+              fill="var(--accent)"
               stroke="var(--surface)"
               strokeWidth={2}
             />

@@ -14,7 +14,7 @@ export default function ForgotPasswordPage() {
     <div className="flex min-h-svh items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-8 block text-center font-display text-2xl font-black uppercase text-cream">
-          Recensioni <span className="text-copper">Smart</span>
+          Recensioni <span className="text-accent">Smart</span>
         </Link>
 
         <div className="rounded-2xl border border-line bg-surface p-8">
@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         <p className="mt-6 text-center text-sm text-muted">
-          <Link href="/login" className="font-semibold text-copper hover:underline">
+          <Link href="/login" className="font-semibold text-accent hover:underline">
             ← Torna al login
           </Link>
         </p>

@@ -14,7 +14,7 @@ export default function LoginPage() {
     <div className="flex min-h-svh items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-8 block text-center font-display text-2xl font-black uppercase text-cream">
-          Recensioni <span className="text-copper">Smart</span>
+          Recensioni <span className="text-accent">Smart</span>
         </Link>
 
         <div className="rounded-2xl border border-line bg-surface p-8">
@@ -35,7 +35,7 @@ export default function LoginPage() {
                 <label className={labelClass} htmlFor="password">
                   Password
                 </label>
-                <Link href="/forgot-password" className="mb-2 text-xs text-muted hover:text-copper">
+                <Link href="/forgot-password" className="mb-2 text-xs text-muted hover:text-accent">
                   Password dimenticata?
                 </Link>
               </div>
@@ -54,7 +54,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-muted">
           Non hai un account?{" "}
-          <Link href="/signup" className="font-semibold text-copper hover:underline">
+          <Link href="/signup" className="font-semibold text-accent hover:underline">
             Registrati
           </Link>
         </p>

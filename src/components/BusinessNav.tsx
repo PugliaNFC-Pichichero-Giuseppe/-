@@ -32,7 +32,7 @@ export function BusinessNav({
           href={`/r/${slug}`}
           target="_blank"
           rel="noopener"
-          className="rounded-lg border border-line px-4 py-2 text-sm text-cream transition hover:border-copper"
+          className="rounded-lg border border-line px-4 py-2 text-sm text-cream transition hover:border-accent"
         >
           Apri pagina pubblica ↗
         </a>
@@ -43,7 +43,7 @@ export function BusinessNav({
             key={tab.key}
             href={`/dashboard/${slug}${tab.suffix}`}
             className={`-mb-px border-b-2 pb-3 font-medium transition ${
-              active === tab.key ? "border-copper text-cream" : "border-transparent text-muted hover:text-cream"
+              active === tab.key ? "border-accent text-cream" : "border-transparent text-muted hover:text-cream"
             }`}
           >
             {tab.label}

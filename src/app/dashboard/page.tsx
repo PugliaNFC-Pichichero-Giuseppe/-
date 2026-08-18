@@ -23,7 +23,7 @@ export default async function DashboardHome() {
         <h1 className="text-2xl font-semibold text-cream">Le tue attività</h1>
         <Link
           href="/dashboard/new"
-          className="rounded-lg bg-copper px-4 py-2 text-sm font-semibold text-cream transition hover:bg-copper/90"
+          className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-cream transition hover:bg-accent/90"
         >
           + Aggiungi attività
         </Link>
@@ -34,7 +34,7 @@ export default async function DashboardHome() {
           <Link
             key={business.id}
             href={`/dashboard/${business.slug}`}
-            className="rounded-2xl border border-line bg-surface p-6 transition hover:border-copper"
+            className="rounded-2xl border border-line bg-surface p-6 transition hover:border-accent"
           >
             <div className="flex items-center justify-between">
               <p className="text-lg font-semibold text-cream">{business.name}</p>

@@ -18,7 +18,7 @@ export default async function ResetPasswordPage({ searchParams }: Props) {
     <div className="flex min-h-svh items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-8 block text-center font-display text-2xl font-black uppercase text-cream">
-          Recensioni <span className="text-copper">Smart</span>
+          Recensioni <span className="text-accent">Smart</span>
         </Link>
 
         <div className="rounded-2xl border border-line bg-surface p-8">
@@ -36,7 +36,7 @@ export default async function ResetPasswordPage({ searchParams }: Props) {
               </p>
               <Link
                 href="/forgot-password"
-                className="block rounded-lg bg-copper px-4 py-3 text-center font-semibold text-cream transition hover:bg-copper/90"
+                className="block rounded-lg bg-accent px-4 py-3 text-center font-semibold text-cream transition hover:bg-accent/90"
               >
                 Richiedi un nuovo link
               </Link>

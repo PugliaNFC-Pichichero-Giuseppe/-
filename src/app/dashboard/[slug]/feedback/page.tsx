@@ -9,7 +9,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 const STATUS_LABEL: Record<string, string> = { new: "Nuovo", read: "Letto", resolved: "Risolto" };
 const STATUS_CLASS: Record<string, string> = {
-  new: "bg-amber/15 text-copper",
+  new: "bg-amber/15 text-warning",
   read: "bg-line text-muted",
   resolved: "bg-success/15 text-success",
 };
@@ -64,7 +64,7 @@ export default async function FeedbackInboxPage({ params }: Props) {
                   <form action={updateFeedbackStatusAction}>
                     <input type="hidden" name="id" value={f.id} />
                     <input type="hidden" name="status" value="read" />
-                    <button className="rounded-lg border border-line px-3 py-1.5 text-xs text-cream hover:border-copper">
+                    <button className="rounded-lg border border-line px-3 py-1.5 text-xs text-cream hover:border-accent">
                       Segna come letto
                     </button>
                   </form>
@@ -73,7 +73,7 @@ export default async function FeedbackInboxPage({ params }: Props) {
                   <form action={updateFeedbackStatusAction}>
                     <input type="hidden" name="id" value={f.id} />
                     <input type="hidden" name="status" value="resolved" />
-                    <button className="rounded-lg border border-line px-3 py-1.5 text-xs text-cream hover:border-copper">
+                    <button className="rounded-lg border border-line px-3 py-1.5 text-xs text-cream hover:border-accent">
                       Segna come risolto
                     </button>
                   </form>

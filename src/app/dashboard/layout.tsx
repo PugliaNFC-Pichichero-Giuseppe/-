@@ -13,7 +13,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <header className="border-b border-line">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <Link href="/dashboard" className="font-display text-lg font-black uppercase tracking-tight text-cream">
-            Recensioni <span className="text-copper">Smart</span>
+            Recensioni <span className="text-accent">Smart</span>
           </Link>
           <div className="flex items-center gap-4 text-sm">
             {isAdminEmail(user.email) && (

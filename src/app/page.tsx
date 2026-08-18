@@ -23,7 +23,7 @@ export default function LandingPage() {
     <div className="mx-auto flex min-h-svh max-w-5xl flex-col px-6">
       <header className="flex items-center justify-between py-8">
         <span className="font-display text-xl font-black uppercase tracking-tight text-cream">
-          Recensioni <span className="text-copper">Smart</span>
+          Recensioni <span className="text-accent">Smart</span>
         </span>
         <nav className="flex items-center gap-6 text-sm">
           <Link href="/login" className="text-muted hover:text-cream">
@@ -31,7 +31,7 @@ export default function LandingPage() {
           </Link>
           <Link
             href="/signup"
-            className="rounded-lg bg-copper px-4 py-2 font-semibold text-cream transition hover:bg-copper/90"
+            className="rounded-lg bg-accent px-4 py-2 font-semibold text-cream transition hover:bg-accent/90"
           >
             Prova gratis
           </Link>
@@ -39,13 +39,13 @@ export default function LandingPage() {
       </header>
 
       <section className="flex flex-1 flex-col items-start justify-center py-16">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-copper">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">
           Per attività locali — bar, ristoranti, negozi, studi
         </p>
         <h1 className="max-w-2xl font-display text-5xl font-black uppercase leading-[0.98] text-cream sm:text-6xl">
-          Le recensioni <em className="text-copper not-italic">belle</em> su Google.
+          Le recensioni <em className="text-accent not-italic">belle</em> su Google.
           <br />
-          Quelle da <em className="text-copper not-italic">migliorare</em>, da te.
+          Quelle da <em className="text-accent not-italic">migliorare</em>, da te.
         </h1>
         <p className="mt-6 max-w-xl text-lg text-muted">
           Una pagina intelligente per ogni cliente NFC o QR: raccoglie una valutazione a stelle, manda i clienti
@@ -55,13 +55,13 @@ export default function LandingPage() {
         <div className="mt-10 flex flex-wrap gap-4">
           <Link
             href="/signup"
-            className="rounded-lg bg-copper px-6 py-3 font-semibold text-cream transition hover:bg-copper/90"
+            className="rounded-lg bg-accent px-6 py-3 font-semibold text-cream transition hover:bg-accent/90"
           >
             Inizia la prova gratuita
           </Link>
           <Link
             href="/login"
-            className="rounded-lg border border-line px-6 py-3 font-semibold text-cream transition hover:border-copper"
+            className="rounded-lg border border-line px-6 py-3 font-semibold text-cream transition hover:border-accent"
           >
             Ho già un account
           </Link>
@@ -71,7 +71,7 @@ export default function LandingPage() {
       <section className="grid gap-6 border-t border-line py-16 sm:grid-cols-3">
         {steps.map((step) => (
           <div key={step.n}>
-            <span className="font-display text-3xl font-black text-copper">{step.n}</span>
+            <span className="font-display text-3xl font-black text-accent">{step.n}</span>
             <h2 className="mt-3 text-base font-semibold text-cream">{step.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
           </div>

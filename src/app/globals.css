@@ -6,14 +6,18 @@
   --surface: #ffffff;
   --surface-2: #f2eee7;
   --line: #e4dfd6;
-  /* Deepened from the brand's brighter copper (#C1602E) so it clears AA
-     contrast on a light surface in every role it's used: large headings,
-     small links, and as a button fill under white text (5.2-5.6:1 here vs
-     ~4:1 at the brighter shade). */
-  --copper: #a84e22;
-  /* Stays bright — reserved for fills (star ratings, badges, the ordinal
-     ramp) where it never sits behind small text; see RatingBars.tsx. */
+  /* Electric blue brand accent. Clears AA on a light surface in every role
+     it's used: headings, small links, borders/focus rings, and as a button
+     fill under the dark --cream label text (3.5:1 there vs ~3:1 for the
+     copper it replaced — an improvement, not a regression, on that role). */
+  --accent: #0066ff;
+  /* Stays bright — reserved for fills (star ratings, the ordinal ramp) where
+     it never sits behind small text; see RatingBars.tsx. */
   --amber: #e8a94a;
+  /* A darkened amber for text ON an amber tint (status/severity badges) —
+     plain --amber fails AA as text, and --accent is the wrong hue there now
+     that it's blue, not a warm rust; see feedback and analysis status maps. */
+  --warning: #7b4d00;
   --cream: #211c16;
   --muted: #655e50;
   --danger: #c4482c;
@@ -25,8 +29,9 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-line: var(--line);
-  --color-copper: var(--copper);
+  --color-accent: var(--accent);
   --color-amber: var(--amber);
+  --color-warning: var(--warning);
   --color-cream: var(--cream);
   --color-muted: var(--muted);
   --color-danger: var(--danger);
@@ -51,6 +56,6 @@ body {
 }
 
 ::selection {
-  background: var(--copper);
+  background: var(--accent);
   color: var(--cream);
 }

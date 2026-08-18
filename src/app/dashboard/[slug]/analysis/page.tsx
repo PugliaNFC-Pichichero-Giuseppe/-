@@ -16,7 +16,7 @@ type Props = { params: Promise<{ slug: string }> };
 const SEVERITY_LABEL: Record<string, string> = { low: "Bassa", medium: "Media", high: "Alta" };
 const SEVERITY_CLASS: Record<string, string> = {
   low: "bg-success/15 text-success",
-  medium: "bg-amber/15 text-copper",
+  medium: "bg-amber/15 text-warning",
   high: "bg-danger/15 text-danger",
 };
 

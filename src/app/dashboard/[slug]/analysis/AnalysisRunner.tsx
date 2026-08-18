@@ -17,7 +17,7 @@ export function AnalysisRunner({
     <form action={formAction} className="shrink-0 text-right">
       <SubmitButton
         pendingChildren="Analizzo…"
-        className="rounded-lg bg-copper px-4 py-2.5 text-sm font-semibold text-cream transition hover:bg-copper/90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-cream transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {hasAnalysis ? "Rigenera analisi" : "Genera analisi"}
       </SubmitButton>
